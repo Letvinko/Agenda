@@ -120,51 +120,30 @@
 					$(this)[0].innerHTML = converterthn(tggl + iteration, bln, thn) + '-' + converterbln(tggl + iteration, bln, thn) + '-' + converter(tggl + iteration, bln, thn);;
 					data['tanggal' + (iteration + 1)] = $(this)[0].innerHTML;
 					iteration++;
+
 				});
 				// console.log('border');
 			}
 
 			function setDay() {
-				var day = new Date().getDay();
+				var day = "";
 				var iteration = 0;
-				var countDate = 1;
-				var hari = ""
+				var countDay = 0;
 				var temp = 0
 				data = {};
-				$.each($('.smallrow'), function() {
-					// console.log($(this));
-					switch (countDate) {
-						case 0:
-							hari = "Senin"
-							break;
-						case 1:
-							hari = "Selasa"
-							break;
-						case 2:
-							hari = "Rabu"
-							break;
-						case 3:
-							hari = "Kamis"
-							break;
-						case 4:
-							hari = "Jumat"
-							break;
-						case 5:
-							hari = "Sabtu"
-							break;
-						case 6:
-							hari = "Minggu"
-							break;
-						default:
-							countDate = 1
-							hari = "Senin"
-							break;
-					}
-					$(this)[0].innerHTML = converterthn(tggl + iteration, bln, thn) + '-' + converterbln(tggl + iteration, bln, thn) + '-' + converter(tggl + iteration, bln, thn) + ', ' + hari;
-					data['tanggal' + (iteration + 1)] = $(this)[0].innerHTML;
-					countDate++;
-					iteration++;
+				Date.prototype.addDays = function(days) {
+				    var date = new Date(this.valueOf());
+				    date.setDate(date.getDate() + days);
+				    return date.getDay();
+				}
 
+				var date = new Date();
+
+				$.each($('.smallrow'), function() {
+					$(this)[0].innerHTML = converterthn(tggl + iteration, bln, thn) + '-' + converterbln(tggl + iteration, bln, thn) + '-' + converter(tggl + iteration, bln, thn) + ', ' +converthari(date.addDays(countDay));
+					data['tanggal' + (iteration + 1)] = $(this)[0].innerHTML;
+					countDay++;
+					iteration++;
 				});
 
 			}
@@ -346,7 +325,7 @@
 				case 6:
 					hari = "Sabtu"
 					break;
-				case 7:
+				case 0:
 					hari = "Minggu"
 					break;
 			}
